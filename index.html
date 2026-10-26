@@ -30,7 +30,16 @@
     background:linear-gradient(135deg,var(--card),transparent);
   }
   h1{ margin:0 0 6px; font-size:2.1rem; letter-spacing:1px; }
+
+  /* 标语行：光标用 CSS 伪元素画，不依赖 JS */
   .tag{ color:var(--muted); margin:0 0 20px; min-height:1.7em; }
+  #typed::after{
+    content:""; display:inline-block; width:8px; height:1em;
+    vertical-align:-2px; margin-left:4px;
+    background:var(--accent); animation:blink 1s step-end infinite;
+  }
+  @keyframes blink{ 50%{ opacity:0; } }
+
   .links{ display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
   a.btn{
     display:inline-block; padding:8px 18px; border-radius:999px; text-decoration:none;
@@ -48,8 +57,6 @@
   li{ margin:5px 0; }
   .card p{ margin:6px 0 0; color:var(--muted); font-size:.9rem; }
   footer{ text-align:center; color:var(--muted); font-size:.85rem; margin-top:36px; }
-  .cursor{ display:inline-block; width:8px; background:var(--accent); animation:blink 1s step-end infinite; }
-  @keyframes blink{ 50%{ opacity:0; } }
 </style>
 </head>
 
@@ -58,7 +65,8 @@
 
   <header>
     <h1>狂暴睡觉组长</h1>
-    <p class="tag"><span id="typed"></span><span class="cursor"></span></p>
+    <!-- 标语：第一句直接写在 HTML 里，JS 挂了也看得见 -->
+    <p class="tag"><span id="typed">每天学一点睡觉</span></p>
     <div class="links">
       <a class="btn" href="https://github.com/Mostync" target="_blank" rel="noreferrer noopener">GitHub</a>
       <a class="btn ghost" href="mailto:you@example.com" target="_blank" rel="noreferrer noopener">Email</a>
@@ -69,14 +77,14 @@
   <h2>🧭 正在学习</h2>
   <div class="card">
     <ul>
-      <li>😴 睡觉
+      <li>😴 睡觉</li>
     </ul>
   </div>
 
   <h2>🔧 常用工具</h2>
   <div class="grid">
     <div class="card">
-      <strong>被子/ 床单</strong>
+      <strong>被子 / 床单</strong>
       <p>不用这个根本睡不了吧！</p>
     </div>
     <div class="card">
@@ -94,23 +102,31 @@
     🛏️ 加入神圣的睡觉教！
   </div>
 
-  <footer>© <span id="year"></span>狂暴睡觉组长</footer>
-
-  </div>
-
-  <footer>© <span id="year"></span>狂暴睡觉组长</footer>
+  <footer>© <span id="year">2026</span> 狂暴睡觉组长</footer>
 
 </div>
 
 <script>
-  const phrases = ["每天学一点睡觉", "把睡觉变成生产力工具", "用GitHub宣传睡觉"];
-  let i = 0, j = 0;
+  const phrases = ["每天学一点睡觉", "把睡觉变成生产力工具", "用 GitHub 宣传睡觉"];
   const el = document.getElementById('typed');
+  let i = 0, j = phrases[0].length;
+
   function type() {
-    if (j <= phrases[i].length) {
-      el.textContent = phrases[i].slice(0, j++);
-      setTimeout(type, 9000);
+    if (j < phrases[i].length) {
+      el.textContent = phrases[i].slice(0, ++j);
+      setTimeout(type, 130);
     } else {
       setTimeout(() => {
-        j = 0; el.textContent = '';
         i = (i + 1) % phrases.length;
+        j = 0;
+        el.textContent = '';
+        type();
+      }, 2000);
+    }
+  }
+  setTimeout(type, 2500);
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
