@@ -105,7 +105,7 @@
   function type() {
     if (j <= phrases[i].length) {
       el.textContent = phrases[i].slice(0, j++);
-      setTimeout(type, 90);
+      setTimeout(type, 9000);
     } else {
       setTimeout(() => {
         j = 0; el.textContent = '';
