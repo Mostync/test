@@ -99,14 +99,21 @@
 </div>
 
 <script>
-  const phrases = ["每天学一点睡觉", "把睡觉变成生产力工具", "用GitHub宣传睡觉"];
-  let i = 0, j = 0;
-  const el = document.getElementById('typed');
-  function type() {
-    if (j <= phrases[i].length) {
-      el.textContent = phrases[i].slice(0, j++);
-      setTimeout(type, 900);
-    } else {
-      setTimeout(() => {
-        j = 0; el.textContent = '';
-        i = (i + 1) % phrases.length;
+const phrases = ["每天学一点睡觉", "把睡觉变成生产力工具", "用GitHub宣传睡觉"];
+const el = document.getElementById('typed');
+let i = 0, j = phrases[0].length;
+
+function type() {
+  if (j < phrases[i].length) {
+    el.textContent = phrases[i].slice(0, ++j);
+    setTimeout(type, 120);
+  } else {
+    setTimeout(() => {
+      i = (i + 1) % phrases.length;
+      j = 0;
+      el.textContent = '';
+      type();
+    }, 2000);
+  }
+}
+setTimeout(type, 2500);
