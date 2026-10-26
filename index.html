@@ -96,24 +96,21 @@
 
   <footer>© <span id="year"></span>狂暴睡觉组长</footer>
 
-</div>
-<p class="tag"><span id="typed">每天学一点睡觉</span></p>
-<script>
-const phrases = ["每天学一点睡觉", "把睡觉变成生产力工具", "用GitHub宣传睡觉"];
-const el = document.getElementById('typed');
-let i = 0, j = phrases[0].length;
+  </div>
 
-function type() {
-  if (j < phrases[i].length) {
-    el.textContent = phrases[i].slice(0, ++j);
-    setTimeout(type, 120);
-  } else {
-    setTimeout(() => {
-      i = (i + 1) % phrases.length;
-      j = 0;
-      el.textContent = '';
-      type();
-    }, 2000);
-  }
-}
-setTimeout(type, 2500);
+  <footer>© <span id="year"></span>狂暴睡觉组长</footer>
+
+</div>
+
+<script>
+  const phrases = ["每天学一点睡觉", "把睡觉变成生产力工具", "用GitHub宣传睡觉"];
+  let i = 0, j = 0;
+  const el = document.getElementById('typed');
+  function type() {
+    if (j <= phrases[i].length) {
+      el.textContent = phrases[i].slice(0, j++);
+      setTimeout(type, 9000);
+    } else {
+      setTimeout(() => {
+        j = 0; el.textContent = '';
+        i = (i + 1) % phrases.length;
